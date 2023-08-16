@@ -25,6 +25,7 @@ namespace Biblioteca_proyecto // Cambia nombre
             /* Datos de prueba */
             prestamos.Add("1", new Prestamo("1", DateTime.Now, "Juan", "El principito", "Antoine de Saint-Exupéry", DateTime.Now.AddDays(7)));
             prestamos.Add("2", new Prestamo("2", DateTime.Now, "Maria", "Cien años de soledad", "Gabriel Garcia Marquez", DateTime.Now.AddDays(14)));
+            DataGrid_datos.Items.Refresh(); 
         }
 
         readonly Dictionary < string, Prestamo > prestamos = new();
@@ -40,7 +41,7 @@ namespace Biblioteca_proyecto // Cambia nombre
             string autor = textBoxAutor.Text;
             DateTime devolucion = dateTimePicker2.SelectedDate.Value.ToUniversalTime();
 
-            Prestamo prestamo = new Prestamo(numero, fecha, nombre, titulo, autor, devolucion);
+            Prestamo prestamo = new(numero, fecha, nombre, titulo, autor, devolucion);
             prestamos.Add(numero, prestamo);
             prestamosBinding.Add(prestamo);
 
@@ -99,19 +100,33 @@ namespace Biblioteca_proyecto // Cambia nombre
             dateTimePicker2 = null;
         }
 
-        private void ButtonBuscar_Click(object sender, EventArgs e) {
+        private void ButtonBuscar_Click(object sender, EventArgs e)
+        {
+            string numero = textBoxBuscar.Text.Trim();
 
-            string numero = textBoxBuscar.Text;
+            if (string.IsNullOrEmpty(numero))
+            {
+                MessageBox.Show("Debe ingresar un número de préstamo");
+                return;
+            }
+
+            if (!prestamos.ContainsKey(numero))
+            {
+                MessageBox.Show("El número de préstamo ingresado no existe");
+                return;
+            }
 
             Prestamo prestamo = prestamos[numero];
 
             int index = prestamosBinding.IndexOf(prestamo);
 
-            if (index >= 0) {
+            if (index >= 0)
+            {
                 DataGrid_datos.SelectedItem = prestamosBinding[index];
-
-            } else {
-
+            }
+            else
+            {
+                MessageBox.Show("Préstamo no encontrado en la lista");
             }
 
         }

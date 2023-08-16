@@ -7,4 +7,12 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="BIBLIO %282%29.jpeg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="BIBLIO (2).jpeg" />
+  </ItemGroup>
+
 </Project>
